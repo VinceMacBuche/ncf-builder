@@ -1,0 +1,129 @@
+{
+    "ntp {": {
+        "method_calls": [
+            {
+                "method_name": "package_install",
+                "class_context": "any",
+                "args": [
+                    "ntp"
+                ]
+            },
+            {
+                "method_name": "file_from_template",
+                "class_context": "any",
+                "args": [
+                    "${path_technique}/templates/ntp.conf",
+                    "/etc/ntp.conf"
+                ]
+            },
+            {
+                "method_name": "service_restart",
+                "class_context": "any",
+                "args": [
+                    "ntp"
+                ]
+            },
+            {
+                "method_name": "service_ensure_running",
+                "class_context": "any",
+                "args": [
+                    "ntp"
+                ]
+            }
+        ],
+        "name": "NTP",
+        "description": "Install, configure and ensure ntpd is running. Uses a template file for configuration.",
+        "version": "0.1",
+        "bundle_name": "ntp {",
+        "bundle_args": []
+    },
+    "openssh_server": {
+        "method_calls": [
+            {
+                "method_name": "package_install",
+                "class_context": "any",
+                "args": [
+                    "${openssh_knowledge.ssh_package_name}"
+                ]
+            },
+            {
+                "method_name": "file_template_expand",
+                "class_context": "any",
+                "args": [
+                    "${openssh_knowledge.ssh_template_file}",
+                    "${openssh_knowledge.ssh_config_file_location}",
+                    "600",
+                    "root",
+                    "root"
+                ]
+            },
+            {
+                "method_name": "service_reload",
+                "class_context": "any",
+                "args": [
+                    "${openssh_knowledge.ssh_etc_initd}"
+                ]
+            },
+            {
+                "method_name": "service_start",
+                "class_context": "any",
+                "args": [
+                    "${openssh_knowledge.ssh_etc_initd}"
+                ]
+            }
+        ],
+        "name": "OpenSSH server",
+        "description": "Install, configure and ensure the OpenSSH server is running.",
+        "version": "0.1",
+        "bundle_name": "openssh_server",
+        "bundle_args": []
+    },
+    "bla": {
+        "method_calls": [
+            {
+                "method_name": "package_install_version",
+                "class_context": "any",
+                "args": [
+                    "${bla.apache_package_name}",
+                    "2.2.11"
+                ]
+            },
+            {
+                "method_name": "service_start",
+                "class_context": "cfengine",
+                "args": [
+                    "${bla.apache_package_name}"
+                ]
+            },
+            {
+                "method_name": "package_install",
+                "class_context": "cfengine",
+                "args": [
+                    "nano"
+                ]
+            }
+        ],
+        "name": "Bla Technique for evaluation of parsingness",
+        "description": "This meta-Technique is a sample only, allowing for testing.",
+        "version": "0.1",
+        "bundle_name": "bla",
+        "bundle_args": []
+    },
+    "motd {": {
+        "method_calls": [
+            {
+                "method_name": "file_ensure_lines_present",
+                "class_context": "any",
+                "args": [
+                    "/etc/motd",
+                    "${motd_content}"
+                ]
+            }
+        ],
+        "name": "Message Of The Day (MOTD)",
+        "description": "Edit the MOTD file and add a line to it",
+        "version": "0.1",
+        "bundle_name": "motd {",
+        "bundle_args": []
+    }
+}
