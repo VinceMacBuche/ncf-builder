@@ -1133,7 +1133,7 @@ $scope.original=undefined;
 
   $scope.selectTechnique = function(technique) {
     $scope.selected=angular.copy(technique);
-    //$scope.original=angular.copy($scope.selected);
+    $scope.original=angular.copy($scope.selected);
   };
   $scope.addBundle = function(bundle) {
     
@@ -1171,11 +1171,14 @@ $scope.original=undefined;
   $scope.$watch('selected', function() { $scope.original == angular.copy($scope.selected) }, true);
 
   $scope.getBundleName = function(method_call) {
-              return $scope.generic_methods[method_call.method_name].name;
-            };
+      return $scope.generic_methods[method_call.method_name].name;
+  };
+  $scope.getBundleDescription = function(method_call) {
+      return $scope.generic_methods[method_call.method_name].description;
+  };
   $scope.getArgName = function(index,method_call) {
-              return $scope.generic_methods[method_call.method_name].bundle_args[index];
-          };
+      return $scope.generic_methods[method_call.method_name].parameter[index].name;
+  };
 
   $scope.removeMethod= function(index) {
       $scope.selected.method_calls.splice(index, 1);
