@@ -1082,7 +1082,7 @@ var techs = {
 
 angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
 .controller('generic', function ($scope) { 
-
+  $scope.searchTerm="";
     
   $scope.capitaliseFirstLetter = function (string) {
     if (string.length === 0) {
@@ -1104,11 +1104,12 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
   
   
   $scope.getTechniques = function () {
+    var techniques = []
     for (var techKey in techs) {
       var technique = $scope.toTechUI(techs[techKey]);
-      techs[techKey] = technique;
+      techniques.push(technique);
     }
-    return techs;
+    return techniques;
   }
 
   $scope.orderGenericMethods = function () {

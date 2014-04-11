@@ -10,6 +10,18 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/ui-bootstrap-0.10.0.js"></script>
     <script src="js/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script id="template/accordion/accordion-group.html" type="text/ng-template">
+    <div class="panel panel-default">
+      <div class="panel-heading" ng-click="isOpen = !isOpen">
+        <h4 class="panel-title">
+          <a class="accordion-toggle"  accordion-transclude="heading">{{heading}}</a>
+        </h4>
+      </div>
+      <div class="panel-collapse" collapse="!isOpen">
+        <div class="panel-body" ng-transclude></div>
+      </div>
+    </div>
+    </script>
   </head>
   <body>
     <div ng-controller="generic" class="row">
@@ -18,22 +30,23 @@
         
 
       <div class="col-md-12">
-        <h2>Techniques <button ng-click="newTechnique()" class="btn btn-default">New</button></h2>
+             <div class="col-md-12">
+        <h2>Techniques <button ng-click="newTechnique()" class="btn btn-default">New</button> <small>Search: <input ng-model="searchText"></small> </h2>
           
           
-          <ul class="list-unstyled"> 
-              <li ng-repeat="technique in techniques">
-                  <a  href="#" class="btn btn-link " role="button" ng-click="selectTechnique(technique)" ng-model="selected" btn-radio="technique">{{technique.name}}</a>
+          <ul class="list-inline"> 
+              <li ng-repeat="technique in techniques | filter:{name:searchText}">
+                  <a  href="#" class="btn btn-primary " role="button" ng-click="selectTechnique(technique)" ng-model="selected" btn-radio="technique">{{technique.name}}</a>
               </li>
           </ul>
-        
+        </div>
       </div>
         
         <div class="col-md-4">
              <div class="col-md-12">
         <h2>Generic Methods</h2>
             <accordion  close-others="oneAtATime">
-            <accordion-group  ng-repeat="(kind,methods) in myMethods"  is-open="isopen" ng-click="isopen = !isopen">
+            <accordion-group  ng-repeat="(kind,methods) in myMethods"  is-open="isopen">
                      <accordion-heading>
             {{capitaliseFirstLetter(kind)}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
         </accordion-heading>
@@ -57,9 +70,10 @@
         <form class="form-horizontal col-md-11" name="editForm">
         
         <h2>Technique "{{original.name}}"</h2>
+        
             
             <accordion close-others="oneAtATime">
-            <accordion-group ng-init="isopen = true" is-open="isopen" ng-click="isopen = !isopen">
+            <accordion-group ng-init="isopen = true" is-open="isopen">
                      <accordion-heading>
             General information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
         </accordion-heading>
@@ -83,7 +97,7 @@
         </div>
                 </accordion-group>
 
-            <accordion-group  ng-repeat="method_call in selected.method_calls track by $index" ng-init="isopen = true" is-open="isopen" ng-click="isopen = !isopen">
+            <accordion-group  ng-repeat="method_call in selected.method_calls track by $index" ng-init="isopen = true" is-open="isopen">
                      <accordion-heading >
             <button type="button" class="close" aria-hidden="true" ng-click="removeMethod($index); $event.stopPropagation();" style="float:none">&times;</button>
             <span> {{getBundleName(method_call)}} </span> <small>{{getBundleDescription(method_call)}}</small>
@@ -99,6 +113,7 @@
             </accordion-group>
                      
             </accordion>
+            
      
         <button ng-disabled="isUnchanged(selected)" class="btn btn-default" ng-click="resetTechnique()">Reset</button>
         <button ng-disabled="editForm.$invalid || isUnchanged(selected)" class="btn btn-default" ng-click="saveTechnique()">Save</button>
