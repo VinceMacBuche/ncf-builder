@@ -1084,7 +1084,13 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
 .controller('generic', function ($scope) { 
 
     
-
+  $scope.capitaliseFirstLetter = function (string) {
+    if (string.length === 0) {
+        return string;
+    } else {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+}
   $scope.toTechUI = function (technique) {
     var args = technique.method_calls.map( function (method_call, i2) {
       method_call.args = method_call.args.map( function (v, i) {
@@ -1109,7 +1115,7 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
     var groupedMethods = {};
     for (var methodKey in methods) {
       var method = methods[methodKey];
-      var name = method.name.split(' ')[0];
+      var name = methodKey.split('_')[0];
       var grouped = groupedMethods[name];
       if (grouped === undefined) {
           groupedMethods[name] = [method];
