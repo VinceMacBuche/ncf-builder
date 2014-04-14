@@ -51,13 +51,12 @@ hr {
 }
 
 .dropdown-menu {
-    //background-image: linear-gradient(#FFA033, #EE7F00 50%, #B86200);
-    //color: #eeeeee;
-    //text-decoration: none;
+    border:0;
+    padding:0;
 }
 
 .dropdown-menu > li > a {
-    //color: #eeeeee;
+    font-size: 10px;
     text-decoration: none;
 }
 
@@ -79,7 +78,36 @@ hr {
     background-image: linear-gradient(#FFA033, #EE7F00 50%, #B86200);
 }
 
+.panel-body {    
+    padding:0;
+}
+
 a:hover {
     text-decoration: none;
     cursor: pointer;
+}
+
+.editForm{
+    padding-right: 0;
+}
+
+
+.right-panel {
+  padding-left: 0;
+  padding-right: 30px;
+}
+
+.affix{
+    position: fixed;
+    top: 10px;
+    width:16.6667%;
+    padding-right:25px;
+}
+
+.panel-body > .form-group:first-of-type {
+    margin-top: 15px;
+}
+
+.right-panel .panel-title {
+    font-size: 13px;
 }

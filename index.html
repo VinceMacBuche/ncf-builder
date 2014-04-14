@@ -64,32 +64,10 @@
         </div>
       </div>
         
-        <div class="col-md-4" ng-show="selected">
-             <div class="col-md-12">
-        <h2>Generic Methods</h2>
-            <accordion  close-others="oneAtATime">
-            <accordion-group  ng-repeat="(kind,methods) in myMethods"  is-open="isopen">
-                     <accordion-heading>
-            {{capitaliseFirstLetter(kind)}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
-        </accordion-heading>
-                <div class="dropdown clearfix" >
-                    
-                <button class="btn btn-ncf dropdown-toggle sr-only" type="button" id="dropdown" data-toggle="dropdown">
-                    Dropdown
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown" style="display:block; position:static; width:100%">
-                      <li  ng-repeat="method in methods" ng-click="addBundle(method)" role="presentation"><a role="menuitem" tabindex="-1" href="#">{{method.name}}</a></li>
-                </ul>
-                </div>
-            </accordion-group>
-                </accordion>
-                 </div>
-      </div>
 
-      <div class="col-md-8" ng-show="selected" >
+      <div class="col-md-10" ng-show="selected" >
         <div >
-        <form class="form-horizontal col-md-11" name="editForm">
+        <form class="form-horizontal col-md-12 editForm" name="editForm">
         
         <h2>Technique "{{original.name}}"</h2>
         
@@ -97,7 +75,8 @@
             <accordion close-others="oneAtATime">
             <accordion-group ng-init="isopen = true" is-open="isopen">
                      <accordion-heading>
-            General information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                          <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+            General information
         </accordion-heading>
         <div class="form-group">
           <label for="techniqueName" class="col-sm-3 control-label">Name:</label>
@@ -121,11 +100,12 @@
 
             <accordion-group  ng-repeat="method_call in selected.method_calls track by $index" ng-init="isopen = true" is-open="isopen">
                      <accordion-heading >
-            <button type="button" class="close" aria-hidden="true" ng-click="removeMethod($index); $event.stopPropagation();" style="float:none">&times;</button>
-            <span> {{getBundleName(method_call)}} </span> <small>{{getBundleDescription(method_call)}}</small>
-            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+            <i type="button" class="glyphicon glyphicon-trash pull-right" aria-hidden="true" ng-click="removeMethod($index); $event.stopPropagation();">
+                </i>
+            
+            <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i> <span> {{getBundleName(method_call)}} </span> 
+                         <small > <i class="glyphicon glyphicon-info-sign"></i> {{getBundleDescription(method_call)}}</small>
         </accordion-heading>
-                
                   <div class="form-group" ng-repeat="arg in method_call.args track by $index">
                     <label for="{{method_call.method_name + $parent.$index +  $index}}" class="col-sm-3 control-label">{{getArgName($index,method_call)}}:</label>
                       <div class="col-sm-8">
@@ -142,6 +122,31 @@
       </form>
         </div>
       </div>
+        
+                <div class="col-md-2 right-panel navbar" ng-show="selected" >
+             <div class="" data-spy="affix" data-offset-top="200">
+        <h4>Generic Methods</h4>
+            <accordion  close-others="oneAtATime">
+            <accordion-group  ng-repeat="(kind,methods) in myMethods"  is-open="isopen">
+                     <accordion-heading>
+                         <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+            {{capitaliseFirstLetter(kind)}} 
+        </accordion-heading>
+                <div class="dropdown clearfix" >
+                    
+                <button class="btn btn-ncf dropdown-toggle sr-only" type="button" id="dropdown" data-toggle="dropdown">
+                    Dropdown
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown" style="display:block; position:static; width:100%">
+                      <li  ng-repeat="method in methods" ng-click="addBundle(method)" role="presentation"><a role="menuitem" tabindex="-1" href="#">{{method.name}}</a></li>
+                </ul>
+                </div>
+            </accordion-group>
+                </accordion>
+                 </div>
+      </div>
+
     </div>
   </body>
   
