@@ -1178,7 +1178,7 @@ $scope.original=undefined;
       return $scope.generic_methods[method_call.method_name].description;
   };
   $scope.getArgName = function(index,method_call) {
-      return $scope.generic_methods[method_call.method_name].parameter[index].name;
+      return $scope.generic_methods[method_call.method_name].parameter[index].description;
   };
 
   $scope.removeMethod= function(index) {
