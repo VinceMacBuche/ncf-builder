@@ -37,9 +37,9 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                         <li class="active"><a >
-                             Create and modify your own ncf technique
-                          </a></li>
+                <li class="active">
+                    <a >Create and modify your own ncf technique</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
             </ul>
@@ -53,18 +53,18 @@
 
       <div class="col-md-12">
              <div class="col-md-12">
-        <h2>Techniques <button ng-click="newTechnique()" class="btn btn-default">New</button> <small>Search: <input ng-model="searchText"></small> </h2>
+        <h2 class="text-center">Techniques <button ng-click="newTechnique()" class="btn btn-ncf">New</button><br/> <small>Search: <input ng-model="searchText"></small> </h2>
           
           
           <ul class="list-inline"> 
               <li ng-repeat="technique in techniques | filter:{name:searchText}">
-                  <a  href="#" class="btn btn-primary " role="button" ng-click="selectTechnique(technique)" ng-model="selected" btn-radio="technique">{{technique.name}}</a>
+                  <a  href="#" class="btn btn-ncf " role="button" ng-click="selectTechnique(technique)" ng-model="selected" btn-radio="technique">{{technique.name}}</a>
               </li>
           </ul>
         </div>
       </div>
         
-        <div class="col-md-4">
+        <div class="col-md-4" ng-show="selected">
              <div class="col-md-12">
         <h2>Generic Methods</h2>
             <accordion  close-others="oneAtATime">
@@ -74,7 +74,7 @@
         </accordion-heading>
                 <div class="dropdown clearfix" >
                     
-                <button class="btn dropdown-toggle sr-only" type="button" id="dropdown" data-toggle="dropdown">
+                <button class="btn btn-ncf dropdown-toggle sr-only" type="button" id="dropdown" data-toggle="dropdown">
                     Dropdown
                     <span class="caret"></span>
                 </button>
@@ -87,8 +87,8 @@
                  </div>
       </div>
 
-      <div class="col-md-8" >
-        <div ng-show="selected">
+      <div class="col-md-8" ng-show="selected" >
+        <div >
         <form class="form-horizontal col-md-11" name="editForm">
         
         <h2>Technique "{{original.name}}"</h2>
@@ -137,8 +137,8 @@
             </accordion>
             
      
-        <button ng-disabled="isUnchanged(selected)" class="btn btn-default" ng-click="resetTechnique()">Reset</button>
-        <button ng-disabled="editForm.$invalid || isUnchanged(selected)" class="btn btn-default" ng-click="saveTechnique()">Save</button>
+        <button ng-disabled="isUnchanged(selected)" class="btn btn-ncf" ng-click="resetTechnique()">Reset</button>
+        <button ng-disabled="editForm.$invalid || isUnchanged(selected)" class="btn btn-ncf" ng-click="saveTechnique()">Save</button>
       </form>
         </div>
       </div>

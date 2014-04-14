@@ -1189,7 +1189,8 @@ $scope.original=undefined;
         var bundle_name = $scope.selected.name.replace(/ /g,"_");
         $scope.selected.bundle_name = bundle_name;
     }
-  $scope.techniques[$scope.selected.bundle_name]=angular.copy($scope.selected);
+  var myNewTechnique = $scope.toTechUI($scope.selected);
+  $scope.techniques.push(angular.copy(myNewTechnique));
   };
 
 });

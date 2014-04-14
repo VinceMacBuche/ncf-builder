@@ -1,5 +1,3 @@
-.panel-body {
-}
 
 
 .navbar-inverse {
@@ -32,4 +30,56 @@
 hr {
   margin-bottom : -10px;
   border-width : 2px 0 0;
+}
+
+.btn-ncf {
+    background-image: linear-gradient(#FFA033, #EE7F00 50%, #B86200);
+    border-color: #B86200;
+    color: #eeeeee;
+}
+
+.btn-ncf:hover, .btn-ncf:focus, .btn-ncf:active, .btn-ncf.active, .open .dropdown-toggle.btn-ncf {
+    background-image: linear-gradient(#EF9552, #DE6A19 50%, #A84719);
+    border-color: #A84719;  
+    color: #eeeeee;   
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    //background-image: linear-gradient(#EF9552, #DE6A19 50%, #A84719);
+    //color: #eeeeee;
+    //text-decoration: none;
+}
+
+.dropdown-menu {
+    //background-image: linear-gradient(#FFA033, #EE7F00 50%, #B86200);
+    //color: #eeeeee;
+    //text-decoration: none;
+}
+
+.dropdown-menu > li > a {
+    //color: #eeeeee;
+    text-decoration: none;
+}
+
+.panel-ncf {
+    border-color: #B86200;
+}
+.panel-ncf > .panel-heading + .panel-collapse .panel-body {
+    border-top-color: #B86200;
+}
+
+.panel-ncf > .panel-heading {
+    background-color: #FFA033;
+    border-color: #FFA033;
+    color: #eeeeee;
+}
+
+.panel-ncf > .panel-body {
+    
+    background-image: linear-gradient(#FFA033, #EE7F00 50%, #B86200);
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
 }
