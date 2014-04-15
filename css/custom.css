@@ -111,3 +111,7 @@ a:hover {
 .right-panel .panel-title {
     font-size: 13px;
 }
+
+.method-actions {
+    margin: 0 5px;
+}

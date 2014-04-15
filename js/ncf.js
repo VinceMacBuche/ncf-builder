@@ -1080,6 +1080,14 @@ var techs = {
     }
 };
 
+
+function swapTwoArrayItems (array,index1,index2) {
+    var item = array[index1];
+    array[index1] = array[index2];
+    array[index2] = item;
+    return array;
+}
+
 angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
 .controller('generic', function ($scope) { 
   $scope.searchTerm="";
@@ -1169,7 +1177,6 @@ $scope.original=undefined;
     $scope.selectTechnique(newTech);
   };
     
-  $scope.$watch('selected', function() { $scope.original == angular.copy($scope.selected) }, true);
 
   $scope.getBundleName = function(method_call) {
       return $scope.generic_methods[method_call.method_name].name;
@@ -1181,6 +1188,16 @@ $scope.original=undefined;
       return $scope.generic_methods[method_call.method_name].parameter[index].description;
   };
 
+  $scope.removeMethod= function(index) {
+      $scope.selected.method_calls.splice(index, 1);
+  }
+  $scope.moveUp = function(index) {
+      console.log("hello");
+      $scope.selected.method_calls = swapTwoArrayItems($scope.selected.method_calls,index,index+1);
+  }
+  $scope.moveDown = function(index) {
+      $scope.selected.method_calls = swapTwoArrayItems($scope.selected.method_calls,index,index-1);
+  }
   $scope.removeMethod= function(index) {
       $scope.selected.method_calls.splice(index, 1);
   }

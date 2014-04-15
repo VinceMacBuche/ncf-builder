@@ -65,7 +65,14 @@
       </div>
         
 
-      <div class="col-md-10" ng-show="selected" >
+        <div class="col-md-2" class="bs-sidebar affix navbar" ng-show="selected">
+    <ul class="nav bs-sidenav" data-spy="affix" data-offset-top="200">
+        <li ng-repeat="method in selected.method_calls track by $index" class="active"><a ng-href="#method_{{$index}}" href="">{{getBundleName(method)}}</a>
+        </li>
+    </ul>
+        </div>
+        
+      <div class="col-md-8" ng-show="selected" >
         <div >
         <form class="form-horizontal col-md-12 editForm" name="editForm">
         
@@ -98,11 +105,11 @@
         </div>
                 </accordion-group>
 
-            <accordion-group  ng-repeat="method_call in selected.method_calls track by $index" ng-init="isopen = true" is-open="isopen">
+            <accordion-group  ng-repeat="method_call in selected.method_calls track by $index" ng-init="isopen = true" is-open="isopen" id=method_{{$index}}>
                      <accordion-heading >
-            <i type="button" class="glyphicon glyphicon-trash pull-right" aria-hidden="true" ng-click="removeMethod($index); $event.stopPropagation();">
-                </i>
-            
+            <i type="button" class="glyphicon glyphicon-trash pull-right method-actions" aria-hidden="true" ng-click="removeMethod($index); $event.stopPropagation();"></i>
+            <i type="button" class="glyphicon glyphicon-circle-arrow-down pull-right method-actions" aria-hidden="true" ng-hide="$index === selected.method_calls.length - 1" ng-click="moveUp($index); $event.stopPropagation();"></i>
+            <i type="button" class="glyphicon glyphicon-circle-arrow-up pull-right method-actions" aria-hidden="true" ng-hide="$index === 0" ng-click="moveDown($index); $event.stopPropagation();"></i>
             <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i> <span> {{getBundleName(method_call)}} </span> 
                          <small > <i class="glyphicon glyphicon-info-sign"></i> {{getBundleDescription(method_call)}}</small>
         </accordion-heading>
