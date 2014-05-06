@@ -115,3 +115,7 @@ a:hover {
 .method-actions {
     margin: 0 5px;
 }
+
+.panel-margin-top {
+    margin-top: 10px;
+}

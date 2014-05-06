@@ -1111,6 +1111,10 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
   }
   
   
+  $scope.isSelected = function(technique) {
+    return angular.equals($scope.original,technique);
+  }
+  
   $scope.getTechniques = function () {
     var techniques = []
     for (var techKey in techs) {
@@ -1139,8 +1143,10 @@ $scope.myMethods = $scope.orderGenericMethods();
 $scope.techniques = $scope.getTechniques();
 $scope.selected=undefined;
 $scope.original=undefined;
+$scope.selectedIndex=undefined;
 
-  $scope.selectTechnique = function(technique) {
+  $scope.selectTechnique = function(technique, index) {
+    $scope.selectedIndex = index;
     $scope.selected=angular.copy(technique);
     $scope.original=angular.copy($scope.selected);
   };
@@ -1192,7 +1198,6 @@ $scope.original=undefined;
       $scope.selected.method_calls.splice(index, 1);
   }
   $scope.moveUp = function(index) {
-      console.log("hello");
       $scope.selected.method_calls = swapTwoArrayItems($scope.selected.method_calls,index,index+1);
   }
   $scope.moveDown = function(index) {
@@ -1206,8 +1211,14 @@ $scope.original=undefined;
         var bundle_name = $scope.selected.name.replace(/ /g,"_");
         $scope.selected.bundle_name = bundle_name;
     }
-  var myNewTechnique = $scope.toTechUI($scope.selected);
-  $scope.techniques.push(angular.copy(myNewTechnique));
+    var myNewTechnique = $scope.toTechUI($scope.selected);
+    if ( $scope.selectedIndex === undefined) {
+      $scope.techniques.push(angular.copy(myNewTechnique));
+    } else {
+      $scope.techniques[$scope.selectedIndex] = angular.copy(myNewTechnique);
+    }
+    $scope.selectTechnique(myNewTechnique);
+    
   };
 
 });
