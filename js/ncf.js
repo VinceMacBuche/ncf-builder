@@ -1114,6 +1114,9 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
   $scope.isSelected = function(technique) {
     return angular.equals($scope.original,technique);
   }
+  $scope.isSelectedMethod = function(method) {
+    return angular.equals($scope.originalMethod,method);
+  }
   
   $scope.getTechniques = function () {
     var techniques = []
@@ -1144,13 +1147,24 @@ $scope.techniques = $scope.getTechniques();
 $scope.selected=undefined;
 $scope.original=undefined;
 $scope.selectedIndex=undefined;
+$scope.selectedMethod=undefined;
+$scope.originalMethod=undefined;
+$scope.selectedMethodIndex=undefined;
 
   $scope.selectTechnique = function(technique, index) {
     $scope.selectedIndex = index;
     $scope.selected=angular.copy(technique);
     $scope.original=angular.copy($scope.selected);
+    //$scope.original=undefined;
   };
-  $scope.addBundle = function(bundle) {
+$scope.selectMethod = function(method_call, index) {
+    $scope.selectedMethodIndex = index;
+    $scope.selectedMethod=angular.copy(method_call);
+    $scope.originalMethod=angular.copy($scope.selectedMethod);
+    //$scope.original=undefined;
+  };
+    
+  $scope.addMethod = function(bundle) {
     
     var call = { "method_name" : bundle.bundle_name
       , "class_context" : "any"
@@ -1165,10 +1179,21 @@ $scope.selectedIndex=undefined;
   $scope.isUnchanged = function(technique) {
     return angular.equals(technique, $scope.original);
   };
+    
+  $scope.isUnchangedMethod = function(methodCall) {
+      console.log(methodCall);
+      console.log($scope.originalMethod)
+    return angular.equals(methodCall, $scope.originalMethod);
+  };
 
     
   $scope.resetTechnique = function() {
     $scope.selected=angular.copy($scope.original);
+  };
+    
+    
+  $scope.resetMethod = function() {
+    $scope.selectedMethod=angular.copy($scope.originalMethod);
   };
 
   $scope.newTechnique = function() {
@@ -1184,10 +1209,10 @@ $scope.selectedIndex=undefined;
   };
     
 
-  $scope.getBundleName = function(method_call) {
+  $scope.getMethodName = function(method_call) {
       return $scope.generic_methods[method_call.method_name].name;
   };
-  $scope.getBundleDescription = function(method_call) {
+  $scope.getMethodDescription = function(method_call) {
       return $scope.generic_methods[method_call.method_name].description;
   };
   $scope.getArgName = function(index,method_call) {
@@ -1197,11 +1222,24 @@ $scope.selectedIndex=undefined;
   $scope.removeMethod= function(index) {
       $scope.selected.method_calls.splice(index, 1);
   }
+  
+  $scope.move = function(from,to) {
+      $scope.selected.method_calls = swapTwoArrayItems($scope.selected.method_calls,from,to);
+      
+      if (from === $scope.selectedMethodIndex) {
+          $scope.selectedMethodIndex = to;
+      } else {
+        if (to === $scope.selectedMethodIndex) {
+          $scope.selectedMethodIndex = from;
+        }
+      }
+  }
   $scope.moveUp = function(index) {
-      $scope.selected.method_calls = swapTwoArrayItems($scope.selected.method_calls,index,index+1);
+      $scope.move(index,index+1);
   }
   $scope.moveDown = function(index) {
-      $scope.selected.method_calls = swapTwoArrayItems($scope.selected.method_calls,index,index-1);
+      
+      $scope.move(index,index-1);
   }
   $scope.removeMethod= function(index) {
       $scope.selected.method_calls.splice(index, 1);
@@ -1219,6 +1257,13 @@ $scope.selectedIndex=undefined;
     }
     $scope.selectTechnique(myNewTechnique);
     
+  };
+    
+    
+  $scope.saveMethod = function() {
+    var method = angular.copy($scope.selectedMethod);
+    $scope.selected.method_calls[$scope.selectedMethodIndex] = method;
+    $scope.selectMethod(method);
   };
 
 });

@@ -112,23 +112,28 @@
         </div>
                 </accordion-group>
         <ul class="list-unstyled" >
-          <li ng-repeat="method_call in selected.method_calls track by $index" class="panel-margin-top">
-              <div class="panel panel-default " >
-              <div class="panel-heading">
+          <li ng-click="selectMethod(method_call,$index)" ng-repeat="method_call in selected.method_calls track by $index" class="panel-margin-top btn btn-block btn-default" ng-class="{'active': isSelectedMethod(method_call)}">
+              <div class="" >
+              <div class="panel-heading" style="overflow:hidden">
         <h4 class="panel-title">
-           <div>        
-              <span> {{getBundleName(method_call)}} </span> 
+           <div class="col-sm-12">        
+              <span class="pull-left"> {{getMethodName(method_call)}} </span> 
               
             <i type="button" class="glyphicon glyphicon-trash pull-right method-actions" aria-hidden="true" ng-click="removeMethod($index); $event.stopPropagation();"></i>
             <i type="button" class="glyphicon glyphicon-circle-arrow-down pull-right method-actions" aria-hidden="true" ng-hide="$index === selected.method_calls.length - 1" ng-click="moveUp($index); $event.stopPropagation();"></i>
             <i type="button" class="glyphicon glyphicon-circle-arrow-up pull-right method-actions" aria-hidden="true" ng-hide="$index === 0" ng-click="moveDown($index); $event.stopPropagation();"></i>
         </div>
-            
-              <small style="margin-top:4px" > <i class="glyphicon glyphicon-info-sign"></i> {{getBundleDescription(method_call)}}</small>
+            <div class="col-sm-12">
+              <small class="pull-left" style="margin-top:4px" > <i class="glyphicon glyphicon-info-sign"></i> {{getMethodDescription(method_call)}}</small>
+                </div>
         </h4>
       </div></div>
               
       
+          </li>
+          <li class="panel-margin-top">
+            
+           <button class="btn btn-block btn-default" ><span class="glyphicon glyphicon-plus-sign"></span>Add new method</button>
           </li>
         </ul>
            <button ng-disabled="isUnchanged(selected)" class="btn btn-ncf" ng-click="resetTechnique()">Reset</button>
@@ -136,7 +141,24 @@
       </form>
         </div>
       </div>
-                <div class="col-md-6 right-panel navbar" ng-show="selected" >
+          
+     <div class="col-md-6" ng-show="selectedMethod">
+         <h2>Method '{{selectedMethod.method_name}}'</h2>
+         <h3>Parameters</h3>
+            <form class="form-horizontal" role="form" name="methodForm">
+                <div class="form-group" ng-repeat="arg in selectedMethod.args track by $index">
+                    <label for="{{$index}}" class="col-sm-4 control-label">{{getArgName($index,selectedMethod)}}:</label>
+                      <div class="col-sm-8">
+                          <input  type="text" id="{{$index}}"  class="form-control" ng-model="arg.value" placeholder="">
+                      </div>
+                  </div>
+                
+           <button ng-disabled="isUnchangedMethod(selectedMethod)" class="btn btn-ncf" ng-click="resetMethod()">Reset</button>
+        <button ng-disabled="methodForm.$invalid || isUnchangedMethod(selectedMethod)" class="btn btn-ncf" ng-click="saveMethod()">Save</button>
+                </form>
+      </div>
+          
+       <div class="col-md-6 right-panel navbar" ng-show="false" >
              <div class="" data-spy="affix" data-offset-top="200">
         <h4>Generic Methods</h4>
             <accordion  close-others="oneAtATime">
@@ -152,7 +174,7 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown" style="display:block; position:static; width:100%">
-                      <li  ng-repeat="method in methods" ng-click="addBundle(method)" role="presentation"><a role="menuitem" tabindex="-1" href="#">{{method.name}}</a></li>
+                      <li  ng-repeat="method in methods" ng-click="addMethod(method)" role="presentation"><a role="menuitem" tabindex="-1" href="#">{{method.name}}</a></li>
                 </ul>
                 </div>
             </accordion-group>
