@@ -1088,7 +1088,7 @@ function swapTwoArrayItems (array,index1,index2) {
     return array;
 }
 
-angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
+angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls','mgcrea.ngStrap'])
 .controller('generic', function ($scope) { 
   $scope.searchTerm="";
     
@@ -1152,8 +1152,9 @@ $scope.original=undefined;
         return {"value" :  "" };
       })
     }
-
+    var length = $scope.selected.method_calls.length
     $scope.selected.method_calls.push(call);
+    $("#techniqueForm").scrollspy("refresh");
   };
     
   $scope.isUnchanged = function(technique) {
@@ -1192,7 +1193,6 @@ $scope.original=undefined;
       $scope.selected.method_calls.splice(index, 1);
   }
   $scope.moveUp = function(index) {
-      console.log("hello");
       $scope.selected.method_calls = swapTwoArrayItems($scope.selected.method_calls,index,index+1);
   }
   $scope.moveDown = function(index) {

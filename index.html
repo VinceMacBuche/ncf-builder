@@ -10,6 +10,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/ui-bootstrap-0.10.0.js"></script>
     <script src="js/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script src="js/angular-strap.js"></script>
+    <script src="js/angular-strap.tpl.js"></script>
     <script id="template/accordion/accordion-group.html" type="text/ng-template">
     <div class="panel panel-default">
       <div class="panel-heading" ng-click="isOpen = !isOpen">
@@ -65,16 +67,18 @@
       </div>
         
 
-        <div class="col-md-2" class="bs-sidebar affix navbar" ng-show="selected">
-    <ul class="nav bs-sidenav" data-spy="affix" data-offset-top="200">
-        <li ng-repeat="method in selected.method_calls track by $index" class="active"><a ng-href="#method_{{$index}}" href="">{{getBundleName(method)}}</a>
-        </li>
-    </ul>
+        <div class="col-md-1 bs-sidebar" id="techniqueMenu" bs-scrollspy-list ng-show="selected">
+            <ul class="nav bs-sidenav" data-spy="affix" data-offset-top="200">
+        <li data-target="#method_{{$index}}" bs-scrollspy  ng-repeat="method in selected.method_calls track by $index">
+      
+        <a href="#method_{{$index}}">{{getBundleName(method)}}</a>
+      </li>
+                </ul>
         </div>
         
-      <div class="col-md-8" ng-show="selected" >
+      <div class="col-md-9" ng-show="selected" >
         <div >
-        <form class="form-horizontal col-md-12 editForm" name="editForm">
+        <form data-spy="scroll"  id="techniqueForm" data-target="#techniqueMenu" class="form-horizontal col-md-12 editForm" name="editForm">
         
         <h2>Technique "{{original.name}}"</h2>
         
