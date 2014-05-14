@@ -10,6 +10,10 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/ui-bootstrap-0.10.0.js"></script>
     <script src="js/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script src="js/modules/debounce.js"></script>
+    <script src="js/modules/dimensions.js"></script>
+    <script src="js/scrollspy/scrollspy.js"></script>
+    <script src="js/modules/affix.js"></script>
     <script id="template/accordion/accordion-group.html" type="text/ng-template">
     <div class="panel panel-default">
       <div class="panel-heading" ng-click="isOpen = !isOpen">
@@ -161,10 +165,10 @@
       </div>
  </div>
        <div class="col-md-6 ncf_col" ng-show="addNew" >
-        <h4>Generic Methods</h4>
-           
+        <h4 style="margin-top:40px">Generic Methods</h4>
+           <div class="col-md-8">
                    <ul class="list-unstyled" ng-repeat="(kind,methods) in myMethods"  >
-         <h5>{{capitaliseFirstLetter(kind)}} </h5>
+         <h5 id={{kind}}>{{capitaliseFirstLetter(kind)}} </h5>
           <li ng-click="addMethod(method)" ng-repeat="method in methods" class="panel-margin-top btn btn-block btn-default">
               <div class="" >
               <div class="panel-heading" style="overflow:hidden">
@@ -176,11 +180,17 @@
               <small class="pull-left" style="margin-top:4px" > <i class="glyphicon glyphicon-info-sign"></i> {{method.description}}</small>
                 </div>
         </h4>
-      </div></div>
-              
-      
+      </div></div>      
           </li>
            </ul>
+           </div>
+           <div class="col-md-4" class="bs-sidebar affix navbar">
+    <ul class="nav bs-sidenav" data-offset-top="-80" bs-affix>
+        <li ng-repeat="(kind,methods) in myMethods" class="active" bs-scrollspy-list><a ng-href="#{{kind}}" href="">{{capitaliseFirstLetter(kind)}} </a>
+        </li>
+    </ul>
+        </div>
+
       </div>
 
     </div>

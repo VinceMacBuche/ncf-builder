@@ -1088,7 +1088,7 @@ function swapTwoArrayItems (array,index1,index2) {
     return array;
 }
 
-angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
+angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls','mgcrea.ngStrap.scrollspy', 'mgcrea.ngStrap.affix'])
 .controller('generic', function ($scope) { 
   $scope.searchTerm="";
     
