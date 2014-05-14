@@ -1153,12 +1153,12 @@ $scope.selectedMethodIndex=undefined;
 $scope.addNew=false;
 
   $scope.selectTechnique = function(technique, index) {
-    if(angular.equals($scope.original,technique) ) {
-        $scope.selected = undefined;
-        $scope.original = undefined;
         $scope.addNew=false;
         $scope.selectedMethod = undefined;
         $scope.originalMethod = undefined;
+    if(angular.equals($scope.original,technique) ) {
+        $scope.selected = undefined;
+        $scope.original = undefined;
     } else {
     $scope.selectedIndex = index;
     $scope.selected=angular.copy(technique);
