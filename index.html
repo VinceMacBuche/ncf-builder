@@ -150,13 +150,20 @@
          <div   >
         <div class="title">Method</div>
         <h3 >{{getMethodName(selectedMethod)}}</h3>
-         <h4>Parameters</h4>
-            <form class="form-horizontal" role="form" name="methodForm">
-                <div class="form-group" ng-repeat="arg in selectedMethod.args track by $index">
-                    <label for="{{$index}}" class="col-sm-4 control-label">{{getArgName($index,selectedMethod)}}:</label>
-                      <div class="col-sm-8">
+            <form role="form" name="methodForm">
+                <h4>Class context</h4>
+                <div class="form-group" style="margin: 15px 10px">
+           
+                          <input  type="text"  class="form-control" ng-model="selectedMethod.class_context" placeholder="">
+
+                  </div>
+                
+                <h4>Parameters</h4>
+                <div class="form-group" style="margin: 15px 10px" ng-repeat="arg in selectedMethod.args track by $index">
+                    <label for="{{$index}}">{{getArgName($index,selectedMethod)}}:</label>
+           
                           <input  type="text" id="{{$index}}"  class="form-control" ng-model="arg.value" placeholder="">
-                      </div>
+
                   </div>
                 
            <button ng-disabled="isUnchangedMethod(selectedMethod)" class="btn btn-ncf" ng-click="resetMethod()">Reset</button>
