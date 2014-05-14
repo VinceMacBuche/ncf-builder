@@ -119,3 +119,72 @@ a:hover {
 .panel-margin-top {
     margin-top: 10px;
 }
+
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html, body, .Override.container, .Override .ncf_col
+{
+    height: 100%;
+}
+
+.Override.container {
+    width: 100%;
+    margin-top: -50px;
+    padding-top: 30px;
+        
+}
+
+
+.Override.container:before
+{
+    content: '';
+    display: block;
+    float: left;
+    height: 100%;
+}
+
+.Override .fill
+{
+    position: relative;
+}
+    .Override .fill:after
+    {
+        content: '';
+        display: block;
+        clear: left;
+    }
+
+.Override .wrapper
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.Override .ncf_col
+{
+    float: left;
+    position: static;
+    overflow: auto;
+}
+
+.Override .ncf_col2
+{
+    position: static;
+    overflow: auto;
+}
+
+
+.title {
+    color: #BBBBBB;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: -20px;
+    margin-top: 25px;
+    text-transform: uppercase;
+}

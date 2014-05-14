@@ -25,7 +25,7 @@
   </head>
   <body>
             <div role="navigation" class="navbar navbar-inverse navbar-static-top">
-    <div class="container">
+    <div>
         <div class="navbar-header">
             <button data-target=".navbar-ex1-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
                 <span class="sr-only">Toggle navigation</span>
@@ -49,10 +49,10 @@
       </div>
       
 
-    <div ng-controller="generic">
-
-      <div class="col-md-2">
-          <table class="table table-hover table-condensed">
+    <div ng-controller="generic" class="container Override">
+<div class="row fill">
+      <div class="col-md-2 ncf_col" style=" border-right:5px #DDDDDD solid; ">
+          <table class="table table-hover table-condensed" style="margin-top:20px">
               <thead>
                   <tr><th> 
                       
@@ -71,7 +71,7 @@
               </thead>
               <tbody>
                      <tr  ng-repeat="technique in techniques track by $index| filter:{name:searchText}" ng-click="selectTechnique(technique,$index)" >
-                  <td href="#" ng-class="{'active': isSelected(technique)}">{{technique.name}}</td>
+                  <td href="#" ng-class="{'active': isSelected(technique)}"><span class="col-md-10">{{technique.name}} </span>  <i type="button" class="glyphicon pull-right method-actions" ng-class="{'glyphicon-chevron-left': isSelected(technique), 'glyphicon-chevron-right': !isSelected(technique)}"></i></td>
               </tr>
                   </tbody>
 </table>
@@ -79,11 +79,11 @@
       </div>
         
 
-      <div class="col-md-4" ng-show="selected" >
-        <div >
+      <div class="col-md-4 ncf_col"  ng-show="selected"  style="border-right:5px #DDDDDD solid;" >
+        <div>
         <form class="form-horizontal col-md-12 editForm" name="editForm">
-        
-        <h2>Technique "{{original.name}}"</h2>
+        <div class="title">Technique</div>
+        <h3 >{{original.name}}</h3>
         
             
             <accordion close-others="oneAtATime">
@@ -118,8 +118,8 @@
         <h4 class="panel-title">
            <div class="col-sm-12">        
               <span class="pull-left"> {{getMethodName(method_call)}} </span> 
-              
-            <i type="button" class="glyphicon glyphicon-trash pull-right method-actions" aria-hidden="true" ng-click="removeMethod($index); $event.stopPropagation();"></i>
+            <i type="button" class="glyphicon pull-right method-actions" ng-class="{'glyphicon-chevron-left': isSelectedMethod(method_call), 'glyphicon-chevron-right': !isSelectedMethod(method_call)}"></i>
+            <i aria-hidden="true" ng-click="removeMethod($index); $event.stopPropagation();"></i>
             <i type="button" class="glyphicon glyphicon-circle-arrow-down pull-right method-actions" aria-hidden="true" ng-hide="$index === selected.method_calls.length - 1" ng-click="moveUp($index); $event.stopPropagation();"></i>
             <i type="button" class="glyphicon glyphicon-circle-arrow-up pull-right method-actions" aria-hidden="true" ng-hide="$index === 0" ng-click="moveDown($index); $event.stopPropagation();"></i>
         </div>
@@ -133,7 +133,7 @@
           </li>
           <li class="panel-margin-top">
             
-           <button class="btn btn-block btn-default" ><span class="glyphicon glyphicon-plus-sign"></span>Add new method</button>
+           <button class="btn btn-block btn-default" ng-click="openMethods()"><span class="glyphicon glyphicon-plus-sign"></span>Add new method</button>
           </li>
         </ul>
            <button ng-disabled="isUnchanged(selected)" class="btn btn-ncf" ng-click="resetTechnique()">Reset</button>
@@ -142,9 +142,11 @@
         </div>
       </div>
           
-     <div class="col-md-6" ng-show="selectedMethod">
-         <h2>Method '{{selectedMethod.method_name}}'</h2>
-         <h3>Parameters</h3>
+     <div class="col-md-6 ncf_col"style="vertical-align:top;" ng-show="selectedMethod">
+         <div   >
+        <div class="title">Method</div>
+        <h3 >{{getMethodName(selectedMethod)}}</h3>
+         <h4>Parameters</h4>
             <form class="form-horizontal" role="form" name="methodForm">
                 <div class="form-group" ng-repeat="arg in selectedMethod.args track by $index">
                     <label for="{{$index}}" class="col-sm-4 control-label">{{getArgName($index,selectedMethod)}}:</label>
@@ -157,31 +159,31 @@
         <button ng-disabled="methodForm.$invalid || isUnchangedMethod(selectedMethod)" class="btn btn-ncf" ng-click="saveMethod()">Save</button>
                 </form>
       </div>
-          
-       <div class="col-md-6 right-panel navbar" ng-show="false" >
-             <div class="" data-spy="affix" data-offset-top="200">
+ </div>
+       <div class="col-md-6 ncf_col" ng-show="addNew" >
         <h4>Generic Methods</h4>
-            <accordion  close-others="oneAtATime">
-            <accordion-group  ng-repeat="(kind,methods) in myMethods"  is-open="isopen">
-                     <accordion-heading>
-                         <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
-            {{capitaliseFirstLetter(kind)}} 
-        </accordion-heading>
-                <div class="dropdown clearfix" >
-                    
-                <button class="btn btn-ncf dropdown-toggle sr-only" type="button" id="dropdown" data-toggle="dropdown">
-                    Dropdown
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown" style="display:block; position:static; width:100%">
-                      <li  ng-repeat="method in methods" ng-click="addMethod(method)" role="presentation"><a role="menuitem" tabindex="-1" href="#">{{method.name}}</a></li>
-                </ul>
+           
+                   <ul class="list-unstyled" ng-repeat="(kind,methods) in myMethods"  >
+         <h5>{{capitaliseFirstLetter(kind)}} </h5>
+          <li ng-click="addMethod(method)" ng-repeat="method in methods" class="panel-margin-top btn btn-block btn-default">
+              <div class="" >
+              <div class="panel-heading" style="overflow:hidden">
+        <h4 class="panel-title">
+           <div class="col-sm-12">        
+              <span class="pull-left"> {{method.name}} </span> 
+        </div>
+            <div class="col-sm-12">
+              <small class="pull-left" style="margin-top:4px" > <i class="glyphicon glyphicon-info-sign"></i> {{method.description}}</small>
                 </div>
-            </accordion-group>
-                </accordion>
-                 </div>
+        </h4>
+      </div></div>
+              
+      
+          </li>
+           </ul>
       </div>
 
+    </div>
     </div>
   </body>
   

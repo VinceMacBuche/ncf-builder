@@ -1150,20 +1150,42 @@ $scope.selectedIndex=undefined;
 $scope.selectedMethod=undefined;
 $scope.originalMethod=undefined;
 $scope.selectedMethodIndex=undefined;
+$scope.addNew=false;
 
   $scope.selectTechnique = function(technique, index) {
+    if(angular.equals($scope.original,technique) ) {
+        $scope.selected = undefined;
+        $scope.original = undefined;
+        $scope.addNew=false;
+        $scope.selectedMethod = undefined;
+        $scope.originalMethod = undefined;
+    } else {
     $scope.selectedIndex = index;
     $scope.selected=angular.copy(technique);
     $scope.original=angular.copy($scope.selected);
+    }
     //$scope.original=undefined;
   };
 $scope.selectMethod = function(method_call, index) {
+    if(angular.equals($scope.originalMethod,method_call) ) {
+         $scope.selectedMethod = undefined;
+         $scope.originalMethod = undefined;
+    } else {
+    $scope.addNew=false;
     $scope.selectedMethodIndex = index;
     $scope.selectedMethod=angular.copy(method_call);
     $scope.originalMethod=angular.copy($scope.selectedMethod);
+    }
     //$scope.original=undefined;
   };
     
+  $scope.openMethods = function() {
+      
+        $scope.addNew=true;
+         $scope.selectedMethod = undefined;
+         $scope.originalMethod = undefined;
+      
+  }
   $scope.addMethod = function(bundle) {
     
     var call = { "method_name" : bundle.bundle_name
@@ -1181,8 +1203,6 @@ $scope.selectMethod = function(method_call, index) {
   };
     
   $scope.isUnchangedMethod = function(methodCall) {
-      console.log(methodCall);
-      console.log($scope.originalMethod)
     return angular.equals(methodCall, $scope.originalMethod);
   };
 
@@ -1210,7 +1230,10 @@ $scope.selectMethod = function(method_call, index) {
     
 
   $scope.getMethodName = function(method_call) {
-      return $scope.generic_methods[method_call.method_name].name;
+      if (method_call === undefined) {
+      } else {
+      return $scope.generic_methods[method_call.method_name].name
+      }
   };
   $scope.getMethodDescription = function(method_call) {
       return $scope.generic_methods[method_call.method_name].description;
@@ -1238,7 +1261,6 @@ $scope.selectMethod = function(method_call, index) {
       $scope.move(index,index+1);
   }
   $scope.moveDown = function(index) {
-      
       $scope.move(index,index-1);
   }
   $scope.removeMethod= function(index) {
