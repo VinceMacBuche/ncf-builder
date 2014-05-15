@@ -1090,7 +1090,6 @@ function swapTwoArrayItems (array,index1,index2) {
 
 angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls','mgcrea.ngStrap.scrollspy', 'mgcrea.ngStrap.affix'])
 .controller('generic', function ($scope) { 
-  $scope.searchTerm="";
     
   $scope.capitaliseFirstLetter = function (string) {
     if (string.length === 0) {
@@ -1271,13 +1270,15 @@ $scope.selectMethod = function(method_call, index) {
         var bundle_name = $scope.selected.name.replace(/ /g,"_");
         $scope.selected.bundle_name = bundle_name;
     }
-    var myNewTechnique = $scope.toTechUI($scope.selected);
+    var myNewTechnique = angular.copy($scope.selected);
     if ( $scope.selectedIndex === undefined) {
-      $scope.techniques.push(angular.copy(myNewTechnique));
+      var length = $scope.techniques.length;
+      $scope.techniques.push(myNewTechnique);
+      $scope.selectedIndex = length;
     } else {
-      $scope.techniques[$scope.selectedIndex] = angular.copy(myNewTechnique);
+      $scope.techniques[$scope.selectedIndex] = myNewTechnique;
     }
-    $scope.selectTechnique(myNewTechnique);
+    $scope.original=angular.copy($scope.selected);
     
   };
     
