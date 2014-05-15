@@ -62,17 +62,12 @@
           <table class="table table-hover table-condensed" >
               <thead>
                   <tr><th> 
-                      
-   
-                      <div class=" col-sm-7 ">
-          <div class="input-group input-group-sm">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-              <input type="text" class="form-control" placeholder="Search" ng-model="searchText.name">
-          </div>
-                      </div>
-                                         <div class=" col-sm-4 col-sm-offset-1">
-                      <button ng-click="newTechnique()" class="btn btn-sm btn-default "><span class="glyphicon glyphicon-plus-sign" style="margin-right:5px"></span>New</button>
+                    <div class="input-group input-group-sm pull-left" style="width:55%">
+                        <span class="input-group-addon" style="padding:2px;"><span class="glyphicon glyphicon-search"></span></span>
+                        <input type="text" class="form-control" placeholder="Search" ng-model="searchText.name" style="padding:2px">
                     </div>
+                      <button ng-click="newTechnique()" class="btn btn-xs btn-default pull-right" style="height:30px;"><span class="glyphicon glyphicon-plus-sign" style="margin-right:5px"></span>New</button>
+
                       
                       </th></tr>
               </thead>
