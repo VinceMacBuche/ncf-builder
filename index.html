@@ -177,9 +177,10 @@
       </div>
  </div>
        <div class="col-md-6 ncf_col" ng-show="addNew" >
+           <div class="row">
+           <div class="col-md-9">
         <div class="title">Library</div>
         <h3 >Generic methods</h3>
-           <div class="col-md-8">
                    <ul class="list-unstyled" ng-repeat="(kind,methods) in myMethods"  >
          <h4 id={{kind}}>{{capitaliseFirstLetter(kind)}} </h4>
           <li ng-click="addMethod(method)" ng-repeat="method in methods" class="panel-margin-top btn btn-block btn-default">
@@ -198,16 +199,16 @@
           </li>
            </ul>
            </div>
-           <div class="col-md-4" class="bs-sidebar affix navbar">
-    <ul class="nav bs-sidenav" data-offset-top="-80" bs-affix>
-        <li ng-repeat="(kind,methods) in myMethods" class="active" bs-scrollspy-list><a ng-href="#{{kind}}" href="">{{capitaliseFirstLetter(kind)}} </a>
+           <div class="col-md-3" class="bs-sidebar navbar" >
+    <ul class="nav bs-sidenav" style="position:fixed; margin-top:60px;">
+        <li ng-repeat="(kind,methods) in myMethods" class="active"><a ng-href="#{{kind}}" href="">{{capitaliseFirstLetter(kind)}} </a>
         </li>
     </ul>
-        </div>
 
       </div>
 
     </div>
+           </div>
     </div>
   </body>
   
