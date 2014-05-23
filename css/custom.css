@@ -137,8 +137,8 @@ html, body, .Override.container, .Override .ncf_col
 
 .Override.container {
     width: 100%;
-    margin-top: -72px;
-    padding-top: 52px;
+    margin: -72px 0 0 0;
+    padding: 52px 0 0 0;
         
 }
 
