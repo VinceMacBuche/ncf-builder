@@ -1088,6 +1088,17 @@ function swapTwoArrayItems (array,index1,index2) {
     return array;
 }
 
+
+function findIndex (array,elem) {
+    for (index in array) {
+        var item = array[index];
+        if (angular.equals(item,elem)) {
+          return array.indexOf(item);
+        }
+    }
+    return -1;
+}
+
 angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls','mgcrea.ngStrap.scrollspy', 'mgcrea.ngStrap.affix'])
 .controller('generic', function ($scope) { 
     
@@ -1145,13 +1156,12 @@ $scope.myMethods = $scope.orderGenericMethods();
 $scope.techniques = $scope.getTechniques();
 $scope.selected=undefined;
 $scope.original=undefined;
-$scope.selectedIndex=undefined;
 $scope.selectedMethod=undefined;
 $scope.originalMethod=undefined;
 $scope.selectedMethodIndex=undefined;
 $scope.addNew=false;
 
-  $scope.selectTechnique = function(technique, index) {
+  $scope.selectTechnique = function(technique) {
         $scope.addNew=false;
         $scope.selectedMethod = undefined;
         $scope.originalMethod = undefined;
@@ -1159,7 +1169,6 @@ $scope.addNew=false;
         $scope.selected = undefined;
         $scope.original = undefined;
     } else {
-    $scope.selectedIndex = index;
     $scope.selected=angular.copy(technique);
     $scope.original=angular.copy($scope.selected);
     }
@@ -1271,12 +1280,12 @@ $scope.selectMethod = function(method_call, index) {
         $scope.selected.bundle_name = bundle_name;
     }
     var myNewTechnique = angular.copy($scope.selected);
-    if ( $scope.selectedIndex === undefined) {
+    var index = findIndex($scope.techniques,$scope.original);
+    if ( index === -1) {
       var length = $scope.techniques.length;
       $scope.techniques.push(myNewTechnique);
-      $scope.selectedIndex = length;
     } else {
-      $scope.techniques[$scope.selectedIndex] = myNewTechnique;
+      $scope.techniques[index] = myNewTechnique;
     }
     $scope.original=angular.copy($scope.selected);
     
