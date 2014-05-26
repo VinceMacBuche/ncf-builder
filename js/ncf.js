@@ -29,14 +29,23 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls','mgcrea.ngStrap.scroll
     return string.charAt(0).toUpperCase() + string.slice(1);
     }
 }
+  
+  // Transome a row technique into a valid UI technique
+  // transform method call args by surrounding them by transforming them into an object so we can iterate on them
+  // Add original_index to the method call, so we can track their modification on index
   $scope.toTechUI = function (technique) {
-    var args = technique.method_calls.map( function (method_call, i2) {
+    var calls = technique.method_calls.map( function (method_call, i2) {
       method_call.args = method_call.args.map( function (v, i) {
+          if (v.hasOwnProperty("value")) {
+              return v;
+          } else {
         return {"value" : v};
+          }
       });
+      method_call["original_index"] = i2;
       return method_call;
     });
-    technique.method_calls = args;
+    technique.method_calls = calls;
     return technique;
   }
   
@@ -45,7 +54,7 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls','mgcrea.ngStrap.scroll
     return angular.equals($scope.original,technique);
   }
   $scope.isSelectedMethod = function(method) {
-    return angular.equals($scope.originalMethod,method);
+    return angular.equals($scope.selectedMethod,method);
   }
   
   $scope.getTechniques = function () {
@@ -77,7 +86,6 @@ $scope.techniques = $scope.getTechniques();
 $scope.selected=undefined;
 $scope.original=undefined;
 $scope.selectedMethod=undefined;
-$scope.originalMethod=undefined;
 $scope.selectedMethodIndex=undefined;
 $scope.addNew=false;
 
@@ -95,14 +103,13 @@ $scope.addNew=false;
     //$scope.original=undefined;
   };
 $scope.selectMethod = function(method_call, index) {
-    if(angular.equals($scope.originalMethod,method_call) ) {
+    var originalMethod = $scope.original.method_calls[method_call.original_index]
+    if(angular.equals($scope.selectedMethod,method_call) ) {
          $scope.selectedMethod = undefined;
-         $scope.originalMethod = undefined;
     } else {
     $scope.addNew=false;
     $scope.selectedMethodIndex = index;
-    $scope.selectedMethod=angular.copy(method_call);
-    $scope.originalMethod=angular.copy($scope.selectedMethod);
+    $scope.selectedMethod=method_call;
     }
     //$scope.original=undefined;
   };
@@ -115,8 +122,9 @@ $scope.selectMethod = function(method_call, index) {
       
   }
   $scope.addMethod = function(bundle) {
-    
+    var original_index = $scope.selected.method_calls.length;
     var call = { "method_name" : bundle.bundle_name
+      , "original_index" : original_index
       , "class_context" : "any"
       , "args": bundle.bundle_args.map(function(v,i) {
         return {"value" :  "" };
@@ -131,7 +139,7 @@ $scope.selectMethod = function(method_call, index) {
   };
     
   $scope.isUnchangedMethod = function(methodCall) {
-    return angular.equals(methodCall, $scope.originalMethod);
+    return angular.equals(methodCall, $scope.original.method_calls[methodCall.original_index]);
   };
 
     
@@ -209,6 +217,7 @@ $scope.selectMethod = function(method_call, index) {
         var bundle_name = $scope.selected.name.replace(/ /g,"_");
         $scope.selected.bundle_name = bundle_name;
     }
+    $scope.selected = $scope.toTechUI($scope.selected);
     var myNewTechnique = angular.copy($scope.selected);
     var index = findIndex($scope.techniques,$scope.original);
     if ( index === -1) {

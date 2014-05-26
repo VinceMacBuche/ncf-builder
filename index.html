@@ -120,8 +120,9 @@
               <div class="" >
               <div class="panel-heading" style="overflow:hidden">
         <h4 class="panel-title">
-           <div>        
+           <div>
               <span class="pull-left"> {{getMethodName(method_call)}} </span> 
+              <span class=" pull-left" ng-hide="isUnchangedMethod(method_call)">*</span>
             <i type="button" class="glyphicon pull-right method-actions" ng-class="{'glyphicon-chevron-left': isSelectedMethod(method_call), 'glyphicon-chevron-right': !isSelectedMethod(method_call)}"></i>
             <i aria-hidden="true" class="glyphicon glyphicon-trash pull-right method-actions" ng-click="removeMethod($index); $event.stopPropagation();"></i>
             <i type="button" class="glyphicon glyphicon-circle-arrow-down pull-right method-actions" aria-hidden="true" ng-hide="$index === selected.method_calls.length - 1" ng-click="moveUp($index); $event.stopPropagation();"></i>
@@ -150,11 +151,10 @@
         </div>
       </div>
           
-     <div class="col-md-6 ncf_col"style="vertical-align:top;" ng-show="selectedMethod">
+     <div class="col-md-6 ncf_col"style="vertical-align:top;" ng-if="selectedMethod">
          <div   >
         <div class="title">Method</div>
         <h3 >{{getMethodName(selectedMethod)}}</h3>
-            <form role="form" name="methodForm">
                 <h4>Conditions</h4>
                 <div class="form-group" style="margin: 15px 10px">
                      <label for="class_context">CFEngine class context:</label>
@@ -171,8 +171,6 @@
                   </div>
                 
            <button ng-disabled="isUnchangedMethod(selectedMethod)" class="btn btn-ncf" ng-click="resetMethod()">Reset</button>
-        <button ng-disabled="methodForm.$invalid || isUnchangedMethod(selectedMethod)" class="btn btn-ncf" ng-click="saveMethod()">Save</button>
-                </form>
       </div>
  </div>
        <div class="col-md-6 ncf_col" ng-show="addNew" >
