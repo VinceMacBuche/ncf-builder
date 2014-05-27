@@ -195,3 +195,11 @@ html, body, .Override.container, .Override .ncf_col
     margin-top: 25px;
     text-transform: uppercase;
 }
+
+.table-ncf {
+    font-size: 14px;
+}
+
+#techniqueDescription {
+    max-width: 100%
+}
