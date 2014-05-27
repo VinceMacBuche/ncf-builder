@@ -79,7 +79,7 @@
                 </table>
             </div>
 
-            <div class="col-md-4 ncf_col"  ng-show="selected"  style="border-right:5px #DDDDDD solid; padding-left: 0px;" >
+            <div class="col-md-5 ncf_col"  ng-show="selected"  style="border-right:5px #DDDDDD solid; padding-left: 0px;" >
                 <form class="form-horizontal editForm" name="editForm" style="margin-bottom:70px;padding-left: 15px;">
                     <div class="title">Technique</div>
                     <h3 >{{original.name}}</h3>
@@ -125,7 +125,7 @@
                     </ul>
                 </form>
 
-                <div class="col-md-4" style="text-align: center; background-color: white; position: fixed; bottom: 0px; padding-top: 10px; border-left-width: 0px; margin-left: 0px; padding-bottom: 10px; border-top:5px #DDDDDD solid; border-right:5px #DDDDDD solid;">
+                <div class="col-md-5" style="text-align: center; background-color: white; position: fixed; bottom: 0px; padding-top: 10px; border-left-width: 0px; margin-left: 0px; padding-bottom: 10px; border-top:5px #DDDDDD solid; border-right:5px #DDDDDD solid;">
                     <div ng-click="openMethods()"  class="btn btn-default" ng-class="{'active': addNew}">
                         <span class="glyphicon glyphicon-plus-sign" style="margin-right:5px"></span>
                         Add new method
@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 ncf_col"style="vertical-align:top;" ng-if="selectedMethod">
+            <div class="col-md-5 ncf_col"style="vertical-align:top;" ng-if="selectedMethod">
                 <div class="title">Method</div>
                 <h3 >{{getMethodName(selectedMethod)}}</h3>
                 <h4>Conditions</h4>
@@ -151,7 +151,7 @@
                 <button ng-disabled="isUnchangedMethod(selectedMethod)" class="btn btn-default" ng-click="resetMethod()">Reset</button>
             </div>
 
-            <div class="col-md-6 ncf_col" ng-show="addNew" >
+            <div class="col-md-5 ncf_col" ng-show="addNew" >
                 <div class="row">
                     <div class="col-md-9">
                         <div class="title">Library</div>
