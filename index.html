@@ -111,8 +111,8 @@
                         <li ng-click="selectMethod(method_call,$index)" ng-repeat="method_call in selected.method_calls track by $index" class="panel-margin-top btn btn-block btn-default" ng-class="{'active': isSelectedMethod(method_call)}">
                             <div class="panel-heading" style="overflow:hidden">
                                 <h4 class="panel-title">
+                                    <small class="glyphicon glyphicon-asterisk pull-left" style="margin-right: 4px;" ng-hide="isUnchangedMethod(method_call)"></small>
                                     <span class="pull-left"> {{getMethodName(method_call)}} </span>
-                                    <span class=" pull-left" ng-hide="isUnchangedMethod(method_call)">*</span>
                                     <i type="button" class="glyphicon pull-right icon-margin" ng-class="{'glyphicon-chevron-left': isSelectedMethod(method_call), 'glyphicon-chevron-right': !isSelectedMethod(method_call)}"></i>
                                     <i aria-hidden="true" class="glyphicon glyphicon-trash pull-right icon-margin  method-actions" ng-click="removeMethod($index); $event.stopPropagation();"></i>
                                     <i type="button" class="glyphicon glyphicon-circle-arrow-down pull-right icon-margin  method-actions" aria-hidden="true" ng-hide="$index === selected.method_calls.length - 1" ng-click="moveUp($index); $event.stopPropagation();"></i>
