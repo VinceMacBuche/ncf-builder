@@ -200,6 +200,10 @@ html, body, .Override.container, .Override .ncf_col
     font-size: 14px;
 }
 
+.table-ncf > tbody > tr:hover > td {
+    background-color: #E8E8E8;
+}
+
 #techniqueDescription {
     max-width: 100%
 }

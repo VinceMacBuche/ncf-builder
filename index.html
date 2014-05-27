@@ -70,9 +70,11 @@
                     </thead>
                     <tbody>
                         <tr  ng-repeat="technique in techniques | orderBy:'name':false | filter:searchText  track by $index" ng-click="selectTechnique(technique,$index)" >
-                            <td href="#" ng-class="{'active': isSelected(technique)}">
+                            <td href="#" ng-class="{'active': isSelected(technique)}" style="height:100%;vertical-align:middle; padding: 0 5px">
                                 <span class="col-md-10">{{technique.name}} </span>
-                                <i type="button" class="glyphicon pull-right icon-margin" ng-class="{'glyphicon-chevron-left': isSelected(technique), 'glyphicon-chevron-right': !isSelected(technique)}"></i>
+                            </td>
+                            <td href="#" ng-class="{'active': isSelected(technique)}" style="height:100%;vertical-align:middle">
+                                <i type="button" class="glyphicon pull-right icon-margin" ng-class="{'glyphicon-chevron-left': isSelected(technique), 'glyphicon-chevron-right': !isSelected(technique)}" style="top:33%"></i>
                             </td>
                         </tr>
                     </tbody>
