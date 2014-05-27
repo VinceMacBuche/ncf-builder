@@ -32,6 +32,10 @@ hr {
   border-width : 2px 0 0;
 }
 
+.modal-header{
+    background-image: linear-gradient(#FFA033, #EE7F00 50%, #B86200);
+    color: #EEEEEE;
+}
 .btn-ncf {
     background-image: linear-gradient(#FFA033, #EE7F00 50%, #B86200);
     border-color: #B86200;

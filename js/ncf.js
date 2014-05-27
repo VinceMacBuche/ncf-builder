@@ -1,7 +1,7 @@
 
 
 
-function swapTwoArrayItems (array,index1,index2) {
+function swapTwoArrayItems(array, index1, index2) {
     var item = array[index1];
     array[index1] = array[index2];
     array[index2] = item;
@@ -9,7 +9,7 @@ function swapTwoArrayItems (array,index1,index2) {
 }
 
 
-function findIndex (array,elem) {
+function findIndex(array, elem) {
     for (index in array) {
         var item = array[index];
         if (angular.equals(item,elem)) {
@@ -19,8 +19,8 @@ function findIndex (array,elem) {
     return -1;
 }
 
-angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls','mgcrea.ngStrap.scrollspy', 'mgcrea.ngStrap.affix'])
-.controller('generic', function ($scope) { 
+angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
+.controller('generic', function ($scope, $modal) { 
     
   $scope.capitaliseFirstLetter = function (string) {
     if (string.length === 0) {
@@ -28,7 +28,7 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls','mgcrea.ngStrap.scroll
     } else {
     return string.charAt(0).toUpperCase() + string.slice(1);
     }
-}
+  }
   
   // Transome a row technique into a valid UI technique
   // transform method call args by surrounding them by transforming them into an object so we can iterate on them
@@ -89,6 +89,18 @@ $scope.selectedMethod=undefined;
 $scope.selectedMethodIndex=undefined;
 $scope.addNew=false;
 
+    
+  $scope.checkSelect = function(technique) {
+      if($scope.selected === undefined) {
+          $scope.selectTechnique(technique);
+      } else {
+        if(angular.equals($scope.original,$scope.selected)) {
+           $scope.selectTechnique(technique);
+        } else {
+           $scope.selectPopup(technique);
+        }        
+    }
+  };
   $scope.selectTechnique = function(technique) {
         $scope.addNew=false;
         $scope.selectedMethod = undefined;
@@ -237,4 +249,39 @@ $scope.selectMethod = function(method_call, index) {
     $scope.selectMethod(method);
   };
 
+  $scope.selectPopup = function( nextTechnique ) {
+    var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: ModalInstanceCtrl,
+      resolve: {
+        technique: function () {
+          return $scope.original;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (doSave) {
+      if (doSave) {
+          $scope.saveTechnique();
+      }
+      $scope.selectTechnique(nextTechnique);
+    });
+  };
 });
+
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, technique) {
+
+  $scope.technique = technique;
+  $scope.save = function() {
+    $modalInstance.close(true);
+  }
+
+  $scope.discard = function () {
+    $modalInstance.close(false);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};

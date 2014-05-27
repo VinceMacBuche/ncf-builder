@@ -25,6 +25,21 @@
       </div>
     </div>
         </script>
+        
+        <script type="text/ng-template" id="myModalContent.html">
+         <div class="modal-header">
+            <h3 class="modal-title">Switching Techniques</h3>
+        </div>
+        <div class="modal-body">
+            Some changes made on Technique '{{technique.name}}' were not saved.
+            If you switch before saving, all your changes will be lost.
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default pull-left" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-default" ng-click="discard()">Discard Changes</button>
+            <button class="btn btn-default" ng-click="save()">Save Changes</button>
+        </div>
+    </script>
         <script src="js/data.js" ></script>
         <script src="js/ncf.js" ></script>
     </head>
@@ -69,7 +84,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  ng-repeat="technique in techniques | orderBy:'name':false | filter:searchText  track by $index" ng-click="selectTechnique(technique,$index)" >
+                        <tr  ng-repeat="technique in techniques | orderBy:'name':false | filter:searchText  track by $index" ng-click="checkSelect(technique,$index)" >
                             <td href="#" ng-class="{'active': isSelected(technique)}" style="height:100%;vertical-align:middle; padding: 0 5px">
                                 <span class="col-md-10">{{technique.name}} </span>
                             </td>
@@ -130,7 +145,7 @@
                 <div class="col-md-5" style="text-align: center; background-color: white; position: fixed; bottom: 0px; padding-top: 10px; border-left-width: 0px; margin-left: 0px; padding-bottom: 10px; border-top:5px #DDDDDD solid; border-right:5px #DDDDDD solid;">
                     <div ng-click="openMethods()"  class="btn btn-default" ng-class="{'active': addNew}">
                         <span class="glyphicon glyphicon-plus-sign" style="margin-right:5px"></span>
-                        Add new method
+                        Add methods
                     </div>
                     <button ng-disabled="isUnchanged(selected)" class="btn btn-default" ng-click="resetTechnique()">Reset</button>
                     <button ng-disabled="editForm.$invalid || isUnchanged(selected)" class="btn btn-default" ng-click="saveTechnique()">Save</button>
