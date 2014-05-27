@@ -44,11 +44,6 @@ hr {
     color: #eeeeee;   
 }
 
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    //background-image: linear-gradient(#EF9552, #DE6A19 50%, #A84719);
-    //color: #eeeeee;
-    //text-decoration: none;
-}
 
 .dropdown-menu {
     border:0;
@@ -116,8 +111,16 @@ a:hover {
     padding: 5px 10px;
 }
 
-.method-actions {
+.icon-margin {
     margin: 0 5px;
+}
+
+.method-actions {
+    opacity: 0.4 ;
+}
+
+.method-actions:hover {
+    opacity: 0.8 ;
 }
 
 .panel-margin-top {
