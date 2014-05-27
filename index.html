@@ -137,20 +137,38 @@
                 </div>
             </div>
 
+
+
+
             <div class="col-md-5 ncf_col"style="vertical-align:top;" ng-if="selectedMethod">
                 <div class="title">Method</div>
-                <h3 >{{getMethodName(selectedMethod)}}</h3>
-                <h4>Conditions</h4>
-                <div class="form-group" style="margin: 15px 10px">
-                    <label for="class_context">CFEngine class context:</label>
-                    <input  type="text" id="class_context"  class="form-control" ng-model="selectedMethod.class_context" placeholder="">
-                </div>
-                <h4>Parameters</h4>
-                <div class="form-group" style="margin: 15px 10px" ng-repeat="arg in selectedMethod.args track by $index">
-                    <label for="{{$index}}">{{getArgName($index,selectedMethod)}}:</label>
-                    <input  type="text" id="{{$index}}"  class="form-control" ng-model="arg.value" placeholder="">
-                </div>
-                <button ng-disabled="isUnchangedMethod(selectedMethod)" class="btn btn-default" ng-click="resetMethod()">Reset</button>
+                <h3 >{{getMethodName(selectedMethod)}}
+                    <button ng-disabled="isUnchangedMethod(selectedMethod)" class="btn btn-default" ng-click="resetMethod()">Reset</button>
+                </h3>
+                <accordion close-others="oneAtATime">
+                    <accordion-group ng-init="isopen = false" is-open="isopen">
+                        <accordion-heading>
+                            <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                            Conditions
+                        </accordion-heading>
+                        <div class="form-group" style="margin: 15px 10px">
+                            <label for="class_context">CFEngine class context:</label>
+                            <input  type="text" id="class_context"  class="form-control" ng-model="selectedMethod.class_context" placeholder="">
+                        </div>
+                        </accordion-group>
+                    </accordion>
+                <accordion close-others="oneAtATime">
+                    <accordion-group ng-init="isopen = true" is-open="isopen">
+                        <accordion-heading>
+                            <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                            Parameters
+                        </accordion-heading>
+                        <div class="form-group" style="margin: 15px 10px" ng-repeat="arg in selectedMethod.args track by $index">
+                            <label for="{{$index}}">{{getArgName($index,selectedMethod)}}:</label>
+                            <input  type="text" id="{{$index}}"  class="form-control" ng-model="arg.value" placeholder="">
+                        </div>
+                        </accordion-group>
+                    </accordion>
             </div>
 
             <div class="col-md-5 ncf_col" ng-show="addNew" >
