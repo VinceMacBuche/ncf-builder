@@ -49,6 +49,22 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
     return technique;
   }
   
+  $scope.toTechNCF = function (technique) {
+    var calls = technique.method_calls.map( function (method_call, i2) {
+      method_call.args = method_call.args.map( function (v, i) {
+          if (v.hasOwnProperty("value")) {
+              return v.value;
+          } else {
+        return v
+          }
+      });
+      delete method_call.original_index
+      return method_call;
+    });
+    technique.method_calls = calls;
+    return technique;
+  }
+  
   
   $scope.isSelected = function(technique) {
     return angular.equals($scope.original,technique);
@@ -58,6 +74,7 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
   }
   
   $scope.getTechniques = function () {
+    // var techniques = $http.get
     var techniques = []
     for (var techKey in techs) {
       var technique = $scope.toTechUI(techs[techKey]);
@@ -66,7 +83,7 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
     return techniques;
   }
 
-  $scope.orderGenericMethods = function () {
+  $scope.groupMethodsByCategory = function () {
     var groupedMethods = {};
     for (var methodKey in methods) {
       var method = methods[methodKey];
@@ -80,14 +97,14 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
     };
     return groupedMethods;      
   }
-$scope.generic_methods = methods;
-$scope.myMethods = $scope.orderGenericMethods();
-$scope.techniques = $scope.getTechniques();
-$scope.selected=undefined;
-$scope.original=undefined;
-$scope.selectedMethod=undefined;
-$scope.selectedMethodIndex=undefined;
-$scope.addNew=false;
+  
+  $scope.generic_methods = methods;
+  $scope.methodsByCategory = $scope.groupMethodsByCategory();
+  $scope.techniques = $scope.getTechniques();
+  $scope.selected=undefined;
+  $scope.original=undefined;
+  $scope.selectedMethod=undefined;
+  $scope.addNew=false;
 
     
   $scope.checkSelect = function(technique) {
@@ -101,38 +118,40 @@ $scope.addNew=false;
         }        
     }
   };
+    
+  // Click on a Technique
+  // Select it if it was not selected, unselect it otherwise
   $scope.selectTechnique = function(technique) {
-        $scope.addNew=false;
-        $scope.selectedMethod = undefined;
-        $scope.originalMethod = undefined;
+    // Always clean Selected methods and add method
+    $scope.addNew=false;
+    $scope.selectedMethod = undefined;
+    // Check if that technique is the same as the original selected one
     if(angular.equals($scope.original,technique) ) {
-        $scope.selected = undefined;
-        $scope.original = undefined;
+      // It's the same, unselect the technique
+      $scope.selected = undefined;
+      $scope.original = undefined;
     } else {
-    $scope.selected=angular.copy(technique);
-    $scope.original=angular.copy($scope.selected);
+      // Select the technique, by using angular.copy to have different objects
+      $scope.selected=angular.copy(technique);
+      $scope.original=angular.copy($scope.selected);
     }
-    //$scope.original=undefined;
   };
-$scope.selectMethod = function(method_call, index) {
-    var originalMethod = $scope.original.method_calls[method_call.original_index]
+
+  $scope.selectMethod = function(method_call) {
     if(angular.equals($scope.selectedMethod,method_call) ) {
          $scope.selectedMethod = undefined;
     } else {
     $scope.addNew=false;
-    $scope.selectedMethodIndex = index;
     $scope.selectedMethod=method_call;
     }
-    //$scope.original=undefined;
   };
-    
+
   $scope.openMethods = function() {
-      
-        $scope.addNew=true;
-         $scope.selectedMethod = undefined;
-         $scope.originalMethod = undefined;
-      
+    $scope.addNew=true;
+    $scope.selectedMethod = undefined;
+    $scope.originalMethod = undefined;  
   }
+
   $scope.addMethod = function(bundle) {
     var original_index = $scope.selected.method_calls.length;
     var call = { "method_name" : bundle.bundle_name
@@ -155,13 +174,11 @@ $scope.selectMethod = function(method_call, index) {
   };
 
     
-  $scope.resetTechnique = function() {
-    $scope.selected=angular.copy($scope.original);
-  };
+
     
     
   $scope.resetMethod = function() {
-    $scope.selectedMethod=angular.copy($scope.originalMethod);
+    $scope.selectedMethod=angular.copy($scope.original.method_calls[methodCall.original_index]);
   };
 
   $scope.newTechnique = function() {
@@ -177,27 +194,30 @@ $scope.selectMethod = function(method_call, index) {
   };
     
 
+  // Utilitary methods on Method call
+    
   $scope.getMethodName = function(method_call) {
-      if (method_call === undefined) {
-      } else {
-          if (method_call.method_name in $scope.generic_methods )
-            return $scope.generic_methods[method_call.method_name].name
-          else 
-            return method_call.method_name
-      }
+    if (method_call.method_name in $scope.generic_methods ) {
+      return $scope.generic_methods[method_call.method_name].name
+    } else {
+      return method_call.method_name
+    }
   };
+
   $scope.getMethodDescription = function(method_call) {
-          if (method_call.method_name in $scope.generic_methods )
+    if (method_call.method_name in $scope.generic_methods ) {
       return $scope.generic_methods[method_call.method_name].description;
-      else 
-          return "";
+    } else {
+        return "";
+    }
   };
+
   $scope.getArgName = function(index,method_call) {
-          if (method_call.method_name in $scope.generic_methods )
+    if (method_call.method_name in $scope.generic_methods ) {
       return $scope.generic_methods[method_call.method_name].parameter[index].description;
-      else {
-          return "arg"
-      }
+    } else {
+      return "arg"
+    }
   };
 
   $scope.getClassPrefixValue= function(method_call) {
@@ -209,31 +229,34 @@ $scope.selectMethod = function(method_call, index) {
      } else {
          return method_call.args[0].value
      }
-  } 
+  }
+
+  // Technique actions
+  
+  // Remove method on specified index
   $scope.removeMethod= function(index) {
       $scope.selected.method_calls.splice(index, 1);
   }
   
+  // Move a method from an index to another index, and switch those
   $scope.move = function(from,to) {
       $scope.selected.method_calls = swapTwoArrayItems($scope.selected.method_calls,from,to);
-      
-      if (from === $scope.selectedMethodIndex) {
-          $scope.selectedMethodIndex = to;
-      } else {
-        if (to === $scope.selectedMethodIndex) {
-          $scope.selectedMethodIndex = from;
-        }
-      }
   }
+  // Move up the method in the hierachy
   $scope.moveUp = function(index) {
       $scope.move(index,index+1);
   }
+  // Move down the method in the hierachy
   $scope.moveDown = function(index) {
       $scope.move(index,index-1);
   }
-  $scope.removeMethod= function(index) {
-      $scope.selected.method_calls.splice(index, 1);
-  }
+  
+  // Resets a Technique to its original state
+  $scope.resetTechnique = function() {
+    $scope.selected=angular.copy($scope.original);
+  };
+  
+  // Save a technique
   $scope.saveTechnique = function() {
     if ($scope.selected.bundle_name === undefined) {
         var bundle_name = $scope.selected.name.replace(/ /g,"_");
@@ -252,12 +275,7 @@ $scope.selectMethod = function(method_call, index) {
     
   };
     
-    
-  $scope.saveMethod = function() {
-    var method = angular.copy($scope.selectedMethod);
-    $scope.selected.method_calls[$scope.selectedMethodIndex] = method;
-    $scope.selectMethod(method);
-  };
+  // Popup definition
 
   $scope.selectPopup = function( nextTechnique ) {
     var modalInstance = $modal.open({

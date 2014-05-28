@@ -96,11 +96,11 @@
                 </table>
             </div>
 
-            <div class="col-md-5 ncf_col"  ng-show="selected"  style="border-right:5px #DDDDDD solid; padding-left: 0px;" >
+            <div class="col-md-5 ncf_col"  ng-if="selected"  style="border-right:5px #DDDDDD solid; padding-left: 0px;" >
                 <form class="form-horizontal editForm" name="editForm" style="margin-bottom:70px;padding-left: 15px;">
                     <div class="title">Technique</div>
                     <h3 >{{original.name}}</h3>
-                    <accordion close-others="oneAtATime">
+                    <accordion>
                         <accordion-group ng-init="isopen = true" is-open="isopen">
                             <accordion-heading>
                                 <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
@@ -162,7 +162,7 @@
                 <h3 >{{getMethodName(selectedMethod)}}
                     <button ng-disabled="isUnchangedMethod(selectedMethod)" class="btn btn-default" ng-click="resetMethod()">Reset</button>
                 </h3>
-                <accordion close-others="oneAtATime">
+                <accordion>
                     <accordion-group ng-init="isopen = false" is-open="isopen">
                         <accordion-heading>
                             <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
@@ -174,7 +174,7 @@
                         </div>
                         </accordion-group>
                     </accordion>
-                <accordion close-others="oneAtATime">
+                <accordion >
                     <accordion-group ng-init="isopen = true" is-open="isopen">
                         <accordion-heading>
                             <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
@@ -188,12 +188,12 @@
                     </accordion>
             </div>
 
-            <div class="col-md-5 ncf_col" ng-show="addNew" >
+            <div class="col-md-5 ncf_col" ng-if="addNew" >
                 <div class="row">
                     <div class="col-md-9">
                         <div class="title">Library</div>
                         <h3 >Generic methods</h3>
-                        <ul class="list-unstyled" ng-repeat="(kind,methods) in myMethods"  >
+                        <ul class="list-unstyled" ng-repeat="(kind,methods) in methodsByCategory"  >
                             <h4 id={{kind}}>{{capitaliseFirstLetter(kind)}} </h4>
                             <li ng-click="addMethod(method)" ng-repeat="method in methods" class="panel-margin-top btn btn-block btn-default">
                                 <div class="panel-heading" style="overflow:hidden">
@@ -208,7 +208,7 @@
                     </div>
                     <div class="col-md-3" class="bs-sidebar navbar" >
                         <ul class="nav bs-sidenav" style="position:fixed; margin-top:60px;">
-                            <li ng-repeat="(kind,methods) in myMethods" class="active">
+                            <li ng-repeat="(kind,methods) in methodsByCategory" class="active">
                                 <a ng-href="#{{kind}}" href="">{{capitaliseFirstLetter(kind)}} </a>
                             </li>
                         </ul>
