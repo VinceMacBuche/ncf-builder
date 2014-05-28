@@ -173,7 +173,7 @@ $scope.selectMethod = function(method_call, index) {
         "bundle_name": undefined,
         "bundle_args": []
     };
-    $scope.selectTechnique(newTech);
+    $scope.checkSelect(newTech);
   };
     
 
