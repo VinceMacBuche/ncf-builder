@@ -200,6 +200,16 @@ $scope.selectMethod = function(method_call, index) {
       }
   };
 
+  $scope.getClassPrefixValue= function(method_call) {
+     if (method_call.method_name in $scope.generic_methods ) {
+         var method = $scope.generic_methods[method_call.method_name];
+         var class_prefix = method.class_parameter;
+         var param_index = method.bundle_args.indexOf(class_prefix);
+         return method_call.args[param_index].value
+     } else {
+         return method_call.args[0].value
+     }
+  } 
   $scope.removeMethod= function(index) {
       $scope.selected.method_calls.splice(index, 1);
   }
