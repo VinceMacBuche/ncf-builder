@@ -74,7 +74,7 @@
                 <table class="table table-hover table-condensed table-ncf" >
                     <thead>
                         <tr>
-                            <th>
+                            <th colspan=2>
                                 <div class="input-group input-group-sm pull-left" style="width:55%">
                                     <span class="input-group-addon" style="padding:2px;"><span class="glyphicon glyphicon-search"></span></span>
                                     <input type="text" class="form-control" placeholder="Filter" ng-model="searchText.name" style="padding:2px">
@@ -89,7 +89,7 @@
                                 <span class="col-md-10">{{technique.name}} </span>
                             </td>
                             <td href="#" ng-class="{'active': isSelected(technique)}" style="height:100%;vertical-align:middle">
-                                <i type="button" class="glyphicon pull-right icon-margin" ng-class="{'glyphicon-chevron-left': isSelected(technique), 'glyphicon-chevron-right': !isSelected(technique)}" style="top:33%"></i>
+                                <i type="button" class="glyphicon pull-right icon-margin" ng-class="{'glyphicon-chevron-left': isSelected(technique), 'glyphicon-chevron-right': !isSelected(technique)}"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -136,7 +136,7 @@
                                     <i type="button" class="glyphicon glyphicon-circle-arrow-up pull-right icon-margin  method-actions" aria-hidden="true" ng-hide="$index === 0" ng-click="moveDown($index); $event.stopPropagation();"></i>
                                     </h4>
                                     <br/>
-                                    <h5 class="pull-left" style="margin-top:4px; margin-bottom:0px;" > <i class="glyphicon glyphicon-cog"></i> {{getClassPrefixValue(method_call)}}</h5><br/>
+                                    <h5 class="pull-left" style="margin-top:3px; margin-bottom:0px;" > <i class="glyphicon glyphicon-cog"></i> {{getClassPrefixValue(method_call)}}</h5><br/>
                                     <h4 style="margin-top:4px" ><small class="pull-left" > <i class="glyphicon glyphicon-info-sign"></i> {{getMethodDescription(method_call)}}</small>
                                 </h4>
                             </div>
