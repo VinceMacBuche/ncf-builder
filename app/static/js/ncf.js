@@ -1,4 +1,4 @@
-
+'use strict';
 
 
 function swapTwoArrayItems(array, index1, index2) {
@@ -12,15 +12,15 @@ function swapTwoArrayItems(array, index1, index2) {
 function findIndex(array, elem) {
     for (index in array) {
         var item = array[index];
-        if (angular.equals(item,elem)) {
+        if (angular.equals(item, elem)) {
           return array.indexOf(item);
         }
     }
     return -1;
 }
 
-angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
-.controller('generic', function ($scope, $modal) { 
+angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
+.controller('generic', function ($scope, $modal) {
     
   $scope.capitaliseFirstLetter = function (string) {
     if (string.length === 0) {
@@ -28,7 +28,7 @@ angular.module('ncf', ['ui.bootstrap','ui.bootstrap.tpls'])
     } else {
     return string.charAt(0).toUpperCase() + string.slice(1);
     }
-  }
+  };
   
   // Transome a row technique into a valid UI technique
   // transform method call args by surrounding them by transforming them into an object so we can iterate on them
