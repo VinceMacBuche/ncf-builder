@@ -20,7 +20,15 @@ function findIndex(array, elem) {
 }
 
 angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
-.controller('generic', function ($scope, $modal, $http) {
+.controller('generic', function ($scope, $modal, $http, $log) {
+    
+  $scope.generic_methods;
+  $scope.techniques;
+  $scope.methodsByCategory;
+  $scope.selected;
+  $scope.original;
+  $scope.selectedMethod;
+  $scope.addNew=false;
     
   $scope.capitaliseFirstLetter = function (string) {
     if (string.length === 0) {
@@ -89,13 +97,14 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
   $scope.getMethods = function () {
     $http.get('/api/generic_methods').success(function(data, status, headers, config) {
         $scope.generic_methods = data;
+        $scope.methodsByCategory = $scope.groupMethodsByCategory();
     });
   }
 
   $scope.groupMethodsByCategory = function () {
     var groupedMethods = {};
-    for (var methodKey in methods) {
-      var method = methods[methodKey];
+    for (var methodKey in $scope.generic_methods) {
+      var method = $scope.generic_methods[methodKey];
       var name = methodKey.split('_')[0];
       var grouped = groupedMethods[name];
       if (grouped === undefined) {
@@ -107,16 +116,6 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
     return groupedMethods;      
   }
   
-  $scope.generic_methods;
-  $scope.techniques;
-  $scope.methodsByCategory = $scope.groupMethodsByCategory();
-  $scope.selected=undefined;
-  $scope.original=undefined;
-  $scope.selectedMethod=undefined;
-  $scope.addNew=false;
-
-    $scope.getMethods();
-    $scope.getTechniques();
   $scope.checkSelect = function(technique) {
       if($scope.selected === undefined) {
           $scope.selectTechnique(technique);
@@ -307,6 +306,9 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
       $scope.selectTechnique(nextTechnique);
     });
   };
+    
+  $scope.getMethods();
+  $scope.getTechniques();
 });
 
 
