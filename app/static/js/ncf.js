@@ -20,7 +20,7 @@ function findIndex(array, elem) {
 }
 
 angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
-.controller('generic', function ($scope, $modal) {
+.controller('generic', function ($scope, $modal, $http) {
     
   $scope.capitaliseFirstLetter = function (string) {
     if (string.length === 0) {
@@ -74,13 +74,22 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
   }
   
   $scope.getTechniques = function () {
-    // var techniques = $http.get
-    var techniques = []
-    for (var techKey in techs) {
-      var technique = $scope.toTechUI(techs[techKey]);
-      techniques.push(technique);
-    }
-    return techniques;
+
+    $scope.techniques = []
+    $http.get('/api/techniques').success(function(data, status, headers, config) {
+        for (var techKey in data) {
+            var technique = $scope.toTechUI(data[techKey]);
+            $scope.techniques.push(technique);
+        }
+    });
+  }
+  
+  
+  
+  $scope.getMethods = function () {
+    $http.get('/api/generic_methods').success(function(data, status, headers, config) {
+        $scope.generic_methods = data;
+    });
   }
 
   $scope.groupMethodsByCategory = function () {
@@ -98,15 +107,16 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
     return groupedMethods;      
   }
   
-  $scope.generic_methods = methods;
+  $scope.generic_methods;
+  $scope.techniques;
   $scope.methodsByCategory = $scope.groupMethodsByCategory();
-  $scope.techniques = $scope.getTechniques();
   $scope.selected=undefined;
   $scope.original=undefined;
   $scope.selectedMethod=undefined;
   $scope.addNew=false;
 
-    
+    $scope.getMethods();
+    $scope.getTechniques();
   $scope.checkSelect = function(technique) {
       if($scope.selected === undefined) {
           $scope.selectTechnique(technique);
@@ -262,6 +272,8 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
         var bundle_name = $scope.selected.name.replace(/ /g,"_");
         $scope.selected.bundle_name = bundle_name;
     }
+    var data = { "path" : "test_ncf_builder", "technique" : $scope.toTechNCF($scope.selected) }
+    $http.post("/api/techniques", data).success(function(data, status, headers, config) {
     $scope.selected = $scope.toTechUI($scope.selected);
     var myNewTechnique = angular.copy($scope.selected);
     var index = findIndex($scope.techniques,$scope.original);
@@ -272,7 +284,7 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
       $scope.techniques[index] = myNewTechnique;
     }
     $scope.original=angular.copy($scope.selected);
-    
+    } );
   };
     
   // Popup definition
