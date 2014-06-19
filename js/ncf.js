@@ -10,7 +10,7 @@ function swapTwoArrayItems(array, index1, index2) {
 
 
 function findIndex(array, elem) {
-    for (index in array) {
+    for (var index in array) {
         var item = array[index];
         if (angular.equals(item, elem)) {
           return array.indexOf(item);
@@ -84,7 +84,7 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
   $scope.getTechniques = function () {
 
     $scope.techniques = []
-    $http.get('/api/techniques').success(function(data, status, headers, config) {
+    $http.get('/ncf/api/techniques').success(function(data, status, headers, config) {
         for (var techKey in data) {
             var technique = $scope.toTechUI(data[techKey]);
             $scope.techniques.push(technique);
@@ -92,10 +92,20 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
     });
   }
   
-  
+  $scope.authenticated = false;
+
+  $scope.auth = function() {
+      $http.get('/ncf/api/auth').success(function(data, status, headers, config) {
+        $scope.authenticated = true;
+      } ).error(function(data, status, headers, config) {
+          $scope.authenticated = false;
+      } )
+  }
+
+  $scope.auth();
   
   $scope.getMethods = function () {
-    $http.get('/api/generic_methods').success(function(data, status, headers, config) {
+    $http.get('/ncf/api/generic_methods').success(function(data, status, headers, config) {
         $scope.generic_methods = data;
         $scope.methodsByCategory = $scope.groupMethodsByCategory();
     });
@@ -271,8 +281,8 @@ angular.module('ncf', ['ui.bootstrap', 'ui.bootstrap.tpls'])
         var bundle_name = $scope.selected.name.replace(/ /g,"_");
         $scope.selected.bundle_name = bundle_name;
     }
-    var data = { "path" : "test_ncf_builder", "technique" : $scope.toTechNCF($scope.selected) }
-    $http.post("/api/techniques", data).success(function(data, status, headers, config) {
+    var data = { "path" : "", "technique" : $scope.toTechNCF($scope.selected) }
+    $http.post("/ncf/api/techniques", data).success(function(data, status, headers, config) {
     $scope.selected = $scope.toTechUI($scope.selected);
     var myNewTechnique = angular.copy($scope.selected);
     var index = findIndex($scope.techniques,$scope.original);
